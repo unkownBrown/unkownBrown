@@ -1,0 +1,24 @@
+name: readme-cat
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: subin21cc/github-readme-cat@v1
+        with:
+          coats: tuxedo
+      - name: Commit
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add github-readme-cat
+          git commit -m "update readme cat" && git push || echo "no changes"
